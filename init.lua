@@ -16,7 +16,7 @@ vim.g.have_nerd_font = true
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -80,6 +80,9 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+
+-- Primeagen remap for deleting selection and pasting from register without overwriting paste in register
+vim.keymap.set('v', '<leader>p', '"_dP')
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -600,7 +603,7 @@ require('lazy').setup({
         'pyright', -- LSP for writing Python code
         'isort', -- Used to format Python Code
         'gopls', -- LSP for Golang
-        'staticchek', -- Static code checking for Golang
+        --        'staticchek', -- Static code checking for Golang
         'gomodifytags', -- For structs in Golang
         'gotests', -- Create tests for Golang
         'delve', -- DAP for Golang
@@ -908,7 +911,7 @@ require('lazy').setup({
   {
     'nvim-tree/nvim-tree.lua',
     version = '*',
-    lazy = false,
+    lazy = true,
     dependencies = {
       'nvim-tree/nvim-web-devicons',
     },
