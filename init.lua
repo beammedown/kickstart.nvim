@@ -599,16 +599,6 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
-        'rust_analyzer', -- LSP for writing Rust code
-        'pyright', -- LSP for writing Python code
-        'isort', -- Used to format Python Code
-        'gopls', -- LSP for Golang
-        --        'staticchek', -- Static code checking for Golang
-        'gomodifytags', -- For structs in Golang
-        'gotests', -- Create tests for Golang
-        'delve', -- DAP for Golang
-        'impl', -- Golang tooling TODO: check what exactly
-        'prettier', -- Prettier for JS
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -663,11 +653,8 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        python = { 'isort' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        javascript = { 'prettierd', 'prettier', stop_after_first = true },
-        go = { 'gopls' },
       },
     },
   },
@@ -855,8 +842,6 @@ require('lazy').setup({
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
       ensure_installed = {
-        'bash',
-        'c',
         'diff',
         'html',
         'lua',
@@ -866,10 +851,6 @@ require('lazy').setup({
         'query',
         'vim',
         'vimdoc',
-        'go',
-        'rust',
-        'python',
-        'asm',
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
@@ -890,6 +871,7 @@ require('lazy').setup({
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
   },
   {
+    -- TODO: Add Comment to what it's doing
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
     config = true,
@@ -898,6 +880,7 @@ require('lazy').setup({
     -- this is equivalent to setup({}) function
   },
   {
+    -- TODO: Explain what it's for
     'stevearc/oil.nvim',
     ---@module 'oil'
     ---@type oil.SetupOpts
@@ -909,6 +892,7 @@ require('lazy').setup({
     lazy = false,
   },
   {
+    -- TODO: DO I use it?
     'nvim-tree/nvim-tree.lua',
     version = '*',
     lazy = true,
@@ -917,12 +901,6 @@ require('lazy').setup({
     },
     config = function()
       require('nvim-tree').setup {}
-    end,
-  },
-  {
-    'RaafatTurki/hex.nvim',
-    config = function()
-      require('hex').setup()
     end,
   },
   {
@@ -983,6 +961,15 @@ require('lazy').setup({
         desc = 'Select fourth file in Harpoon',
       },
     },
+  },
+  {
+    'nvim-flutter/flutter-tools.nvim',
+    lazy = false,
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'stevearc/dressing.nvim', -- optional for vim.ui.select
+    },
+    config = true,
   },
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
