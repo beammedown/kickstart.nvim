@@ -1,3 +1,5 @@
+-- TODO: Break this large file into smaller ones for faster lsp time?
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -25,7 +27,7 @@ vim.opt.mouse = 'a'
 vim.opt.showmode = false
 
 -- Setting Folds so that the File is automatically folded when opening
-vim.opt.foldmethod = 'indent'
+-- vim.opt.foldmethod = 'indent'
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
@@ -86,6 +88,9 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 
 -- Primeagen remap for deleting selection and pasting from register without overwriting paste in register
 vim.keymap.set('v', '<leader>p', '"_dP')
+
+-- Testing Keybind <C-s> for HTML or JSX autocomplete
+vim.keymap.set('i', '<C-s>', '<esc>yiwi<lt><esc>ea></><esc>hpF>i')
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -825,6 +830,11 @@ require('lazy').setup({
       --  - ci'  - [C]hange [I]nside [']quote
       require('mini.ai').setup { n_lines = 500 }
 
+      -- Automatically add pair of brackets
+      --
+      -- Examples:
+      -- - "(" automatically add ")"
+      require('mini.pairs').setup()
       -- Add/delete/replace surroundings (brackets, quotes, etc.)
       --
       -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
@@ -893,14 +903,6 @@ require('lazy').setup({
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
   },
   {
-    'windwp/nvim-autopairs',
-    event = 'InsertEnter',
-    config = true,
-    opts = {},
-    -- use opts = {} for passing setup options
-    -- this is equivalent to setup({}) function
-  },
-  {
     'stevearc/oil.nvim',
     ---@module 'oil'
     ---@type oil.SetupOpts
@@ -934,6 +936,21 @@ require('lazy').setup({
     ---@module "ibl"
     ---@type ibl.config
     opts = {},
+  },
+  {
+    'folke/flash.nvim',
+    event = 'VeryLazy',
+    ---@type Flash.Config
+    opts = {},
+  -- stylua: ignore
+  keys = {
+      -- TODO: Find new hotkey to also be able to use suround.nvim?? If I even use it
+    { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+    { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+    { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+    { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+    { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+  },
   },
   {
     'ThePrimeagen/harpoon',
