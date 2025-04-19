@@ -26,6 +26,9 @@ return { -- Collection of various small independent plugins/modules
     -- Alt + hjkl to move in each corresponding direction
     require('mini.move').setup()
 
+    -- Automatically close brackets
+    require('mini.pairs').setup()
+
     -- Simple and easy statusline.
     --  You could remove this setup call if you don't like it,
     --  and try some other statusline plugin
