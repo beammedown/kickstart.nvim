@@ -1,11 +1,30 @@
 return {
-  'nvim-tree/nvim-tree.lua',
+  'nvim-neo-tree/neo-tree.nvim',
   version = '*',
-  lazy = true,
   dependencies = {
-    'nvim-tree/nvim-web-devicons',
+    'nvim-lua/plenary.nvim',
+    'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+    'MunifTanjim/nui.nvim',
   },
-  config = function()
-    require('nvim-tree').setup {}
-  end,
+  cmd = 'Neotree',
+  keys = {
+    { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
+  },
+  opts = {
+    filesystem = {
+      filtered_items = {
+        visible = true,
+        hide_dotfiles = false,
+      },
+      window = {
+        mappings = {
+          ['\\'] = 'close_window',
+          ['<tab>'] = function(state)
+            state.commands['open'](state)
+            vim.cmd 'Neotree reveal'
+          end,
+        },
+      },
+    },
+  },
 }
