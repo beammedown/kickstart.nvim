@@ -32,5 +32,6 @@ require('lazy').setup('plugins', {
     },
   },
 })
+
 -- Activate Catppuccin colorscheme
 vim.cmd.colorscheme 'catppuccin'
